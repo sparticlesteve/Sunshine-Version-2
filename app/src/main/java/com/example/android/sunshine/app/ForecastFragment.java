@@ -104,14 +104,14 @@ public class ForecastFragment extends Fragment {
             BufferedReader reader = null;
 
             // Will contain the raw JSON response as a string.
-            String forecastJsonStr = null;
+            String forecastJsonStr;
 
             try {
 
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                String baseUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&units=metric&cnt=7";
+                String baseUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=94043,us&units=metric&cnt=7";
                 String apiKey = "&APPID=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
                 URL url = new URL(baseUrl.concat(apiKey));
 
@@ -142,6 +142,9 @@ public class ForecastFragment extends Fragment {
                     return null;
                 }
                 forecastJsonStr = buffer.toString();
+
+                // TEST the result
+                Log.v(LOG_TAG, "Forecast JSON String: " + forecastJsonStr);
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
