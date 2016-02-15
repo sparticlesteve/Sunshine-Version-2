@@ -29,6 +29,11 @@ import java.util.List;
 public class ForecastFragment extends Fragment {
 
     public ForecastFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
