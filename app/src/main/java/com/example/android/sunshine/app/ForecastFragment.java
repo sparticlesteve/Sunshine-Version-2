@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -26,6 +29,24 @@ import java.util.List;
 public class ForecastFragment extends Fragment {
 
     public ForecastFragment() {
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.forecastfragment, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                // TODO
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -34,7 +55,7 @@ public class ForecastFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         // Creating fake data
-        List<String> weekForecast = new ArrayList<String>();
+        List<String> weekForecast = new ArrayList<>();
         weekForecast.add("Today - Sunny - 88 / 63");
         weekForecast.add("Tomorrow - Foggy - 70 / 46");
         weekForecast.add("Saturday - Rainy - 60 / 50");
@@ -48,7 +69,7 @@ public class ForecastFragment extends Fragment {
 
         // Create the adapter which will construct layouts on demand
         ArrayAdapter<String> forecastAdapter =
-                new ArrayAdapter<String>(
+                new ArrayAdapter<>(
                         // Current context
                         getActivity(),
                         // ID of list item layout
@@ -61,15 +82,6 @@ public class ForecastFragment extends Fragment {
         // Retrieve a reference to our forecast listview
         ListView forecastListView = (ListView) rootView.findViewById(R.id.listview_forecast);
         forecastListView.setAdapter(forecastAdapter);
-
-        /*
-        // Construct the URL for the OpenWeatherMap query
-        // Possible parameters are avaiable at OWM's forecast API page, at
-        // http://openweathermap.org/API#forecast
-        String baseUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&units=metric&cnt=7";
-        String apiKey = "&APPID=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
-        URL url = new URL(baseUrl.concat(apiKey));
-        */
 
         return rootView;
     }
@@ -117,7 +129,7 @@ public class ForecastFragment extends Fragment {
                     // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
                     // But it does make debugging a *lot* easier if you print out the completed
                     // buffer for debugging.
-                    buffer.append(line + "\n");
+                    buffer.append(line).append("\n");
                 }
 
                 if (buffer.length() == 0) {
